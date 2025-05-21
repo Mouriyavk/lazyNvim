@@ -18,9 +18,9 @@ return {
         "rust_analyzer",   -- Rust
         "clangd",          -- C / C++
         "jdtls",           -- Java
-        -- Add more if needed
+        -- Add more servers as needed
       },
-      automatic_installation = true, -- optional but useful fallback
+      automatic_installation = true, -- fallback to install servers automatically
     },
   },
   {
@@ -41,18 +41,34 @@ return {
       }
 
       for _, server in ipairs(servers) do
-        lspconfig[server].setup({
+        local opts = {
           capabilities = capabilities,
-        })
+        }
+
+        if server == "lua_ls" then
+          opts.settings = {
+            Lua = {
+              diagnostics = {
+                globals = { "vim" }, -- Recognize 'vim' as a global
+              },
+              workspace = {
+                library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false,
+              },
+            },
+          }
+          opts.root_dir = require("lspconfig.util").root_pattern(".git", ".luarc.json", "init.lua")
+        end
+
+        lspconfig[server].setup(opts)
       end
 
-      -- Global LSP keybindings
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+      -- Global LSP keybindings for convenience
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "LSP Hover Documentation" })
+      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to Definition" })
+      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "Show References" })
+      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Actions" })
     end,
   },
 }
-
 
