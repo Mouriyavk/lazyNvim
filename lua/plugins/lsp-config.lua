@@ -11,16 +11,16 @@ return {
     lazy = false,
     opts = {
       ensure_installed = {
-        "tsserver",        -- JavaScript / TypeScript
-        "html",            -- HTML
-        "lua_ls",          -- Lua
-        "pyright",         -- Python
-        "rust_analyzer",   -- Rust
-        "clangd",          -- C / C++
-        "jdtls",           -- Java
-        -- Add more servers as needed
+        "ts_ls",           -- Updated TypeScript/JavaScript LSP (replaces tsserver)
+        "html",
+        "lua_ls",
+        "pyright",
+        "rust_analyzer",
+        "clangd",
+        "jdtls",
+        -- Add more if needed
       },
-      automatic_installation = true, -- fallback to install servers automatically
+      automatic_installation = true,
     },
   },
   {
@@ -31,7 +31,7 @@ return {
       local lspconfig = require("lspconfig")
 
       local servers = {
-        "tsserver",
+        "ts_ls",          -- updated here too
         "html",
         "lua_ls",
         "pyright",
@@ -49,7 +49,7 @@ return {
           opts.settings = {
             Lua = {
               diagnostics = {
-                globals = { "vim" }, -- Recognize 'vim' as a global
+                globals = { "vim" },
               },
               workspace = {
                 library = vim.api.nvim_get_runtime_file("", true),
@@ -63,7 +63,6 @@ return {
         lspconfig[server].setup(opts)
       end
 
-      -- Global LSP keybindings for convenience
       vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "LSP Hover Documentation" })
       vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to Definition" })
       vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "Show References" })
@@ -71,4 +70,5 @@ return {
     end,
   },
 }
+
 
