@@ -1,38 +1,74 @@
-# 🧭 Neovim File Navigation & Fuzzy Finder Setup
+# 🌙 LazyVim Setup
 
-This setup makes it super easy to find files, search inside them, switch projects, and browse your file system — all inside Neovim.
+A fast, modular, and developer-friendly Neovim configuration built on top of **lazy.nvim**, designed to provide a smooth coding experience with sensible defaults, advanced navigation, LSP integration, fuzzy finding, and project detection.
 
-It uses **Telescope** for fuzzy finding, **Oil.nvim** for a simple floating file explorer, and **project.nvim** for automatic project root detection. Everything is designed to help you move faster and stay focused. 🚀
+## 📦 Features
 
----
-
-## 🔑 Key Bindings
-
-### 📡 Telescope (Search Tool)
-
-| Keybinding   | What it does                      |
-| ------------ | --------------------------------- |
-| `<C-p>`      | Find files in your current folder |
-| `<leader>fg` | Search text inside files          |
-| `<leader>fp` | Jump between your projects        |
+- 🚀 Fast startup via lazy-loading (lazy.nvim)
+- 📂 Modern file browsing with [Oil.nvim](https://github.com/stevearc/oil.nvim)
+- 🔍 Fuzzy file finding and text search with [Telescope](https://github.com/nvim-telescope/telescope.nvim)
+- 🧠 Built-in LSP, autocompletion, and code actions
+- 🧩 Project root detection with [project.nvim](https://github.com/ahmedkhalf/project.nvim)
+- 🎨 Easy theme switching
+- 🧱 Smooth window navigation and splits
 
 ---
 
-### 🗂️ Oil.nvim (File Explorer)
+## 🛠️ Installation
 
-| Keybinding   | What it does                             |
-| ------------ | ---------------------------------------- |
-| `<C-n>`      | Open a floating file explorer            |
-| `-`          | Toggle Oil file browser in floating mode |
-| `<leader>bf` | Show list of open buffers (Neo-tree)     |
+### 1. Requirements
 
-💡 With Oil.nvim, you can open and explore any folder on your system — not just where you're currently working.
+- [Neovim ≥ 0.11](https://github.com/neovim/neovim/releases)
+- Git
+- Nerd Font (for icons)
+- C compiler (for `treesitter`)
+- LSP servers, linters, formatters managed via `mason.nvim`
+
+### 2. Clone the Config
+
+```bash
+# Backup your current config if needed
+mv ~/.config/nvim ~/.config/nvim.bak_$(date +%Y%m%d)
+
+# Clone this config
+git clone https://github.com/Mouriyavk/lazyNvim.git ~/.config/nvim
+````
+
+### 3. Open Neovim
+
+```bash
+nvim
+```
+
+Hit `Y` when prompted to install plugins and lazy.nvim. Initial setup will take a few seconds.
 
 ---
 
-### 🧠 LSP (Language Server Protocol)
+## 🎯 Keybindings Cheatsheet
 
-| Keybinding   | What it does        |
+### 🔍 Telescope – Fuzzy Finding
+
+| Shortcut     | Action                          |
+| ------------ | ------------------------------- |
+| `<C-p>`      | Find files in current folder    |
+| `<leader>fg` | Live grep (search inside files) |
+| `<leader>fp` | Switch between your projects    |
+
+---
+
+### 📂 Oil.nvim – File Explorer
+
+| Shortcut     | Action                                |
+| ------------ | ------------------------------------- |
+| `<C-n>`      | Open floating file explorer           |
+| `-`          | Toggle file browser in current buffer |
+| `<leader>bf` | Show list of open buffers (Neo-tree)  |
+
+---
+
+### 🧠 LSP
+
+| Shortcut     | Action              |
 | ------------ | ------------------- |
 | `K`          | Hover documentation |
 | `<leader>gd` | Go to definition    |
@@ -43,48 +79,66 @@ It uses **Telescope** for fuzzy finding, **Oil.nvim** for a simple floating file
 
 ### 🧱 Window Management
 
-| Keybinding   | What it does             |
-| ------------ | ------------------------ |
-| `<leader>sh` | Horizontal split         |
-| `<leader>sv` | Vertical split           |
-| `<leader>q`  | Close current split      |
-| `<C-h>`      | Move to the left window  |
-| `<C-l>`      | Move to the right window |
-| `<C-j>`      | Move to the window below |
-| `<C-k>`      | Move to the window above |
-| `<leader>h`  | Remove search highlights |
-
-
-## 🧩 Project Detection with `project.nvim`
-
-Neovim automatically detects your project root using **project.nvim** and integrates seamlessly with Telescope.
-
-To **enable project detection**, make sure you configure `project_nvim` with:
-
-* `patterns = { ".git", "package.json", "Makefile", "README.md" }`
-
-This tells Neovim how to recognize a folder as a "project".
-
-### 💼 Usage:
-
-* You can **view and switch between your projects** using:
-
-  **`<leader>fp` → Jump between your projects**
-
-This makes project hopping blazing fast — no more manually setting directories or using clunky file trees.
-
-* Automatically sets your working directory based on project root.
-* Supports `.git`, `package.json`, `Makefile`, `README.md` as project indicators.
-* Works with LSP fallback if no patterns are found.
+| Shortcut      | Action                    |
+| ------------- | ------------------------- |
+| `<leader>sh`  | Split window horizontally |
+| `<leader>sv`  | Split window vertically   |
+| `<leader>q`   | Close current window      |
+| `<C-h/j/k/l>` | Navigate between windows  |
+| `<leader>h`   | Remove search highlights  |
 
 ---
 
-## 🎨 Changing Themes
+## 🧩 Project Detection with `project.nvim`
 
-To change the color theme in Neovim, just type:
+Automatically detects the project root using common patterns.
+
+### 📌 Configuration:
+
+```lua
+require("project_nvim").setup({
+  detection_methods = { "pattern", "lsp" },
+  patterns = { ".git", "package.json", "Makefile", "README.md" },
+  show_hidden = true,
+})
+```
+
+### 🗃️ Usage:
+
+* `<leader>fp` — Quickly switch between projects
+* Automatically sets `cwd` to project root for better LSP, file navigation, and search accuracy
+
+---
+
+## 🎨 Changing Theme
 
 ```vim
 :Theme <theme_name>
 ```
 
+Try `tokyonight`, `catppuccin`, `gruvbox`, or any LazyVim-compatible theme.
+
 ---
+
+## 🧠 Want to Customize?
+
+* Add plugins in `lua/plugins/`
+* Modify keybindings in `lua/init/keymaps.lua`
+* Change Neovim options in `lua/init/options.lua`
+
+---
+
+## ✅ First-Time Setup Checklist
+
+* [ ] Run `:TSUpdate` to update treesitter
+* [ ] Open `:Mason` to install LSPs, linters, formatters
+* [ ] Customize `options.lua` and `keymaps.lua` as needed
+
+---
+
+## 💬 Feedback
+
+Feel free to fork, star, and suggest improvements!
+
+---
+
