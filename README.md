@@ -1,16 +1,17 @@
 # 🌙 LazyVim Setup
 
-A fast, modular, and developer-friendly Neovim configuration built on top of **lazy.nvim**, designed to provide a smooth coding experience with sensible defaults, advanced navigation, LSP integration, fuzzy finding, and project detection.
+A **simple, clean, and fast Neovim configuration** built on top of [lazy.nvim](https://github.com/folke/lazy.nvim).
+This setup is designed for **quick startup**, **zero hassle**, and a **blazing-fast developer experience** right out of the box.
 
 ## 📦 Features
 
-- 🚀 Fast startup via lazy-loading (lazy.nvim)
-- 📂 Modern file browsing with [Oil.nvim](https://github.com/stevearc/oil.nvim)
-- 🔍 Fuzzy file finding and text search with [Telescope](https://github.com/nvim-telescope/telescope.nvim)
-- 🧠 Built-in LSP, autocompletion, and code actions
-- 🧩 Project root detection with [project.nvim](https://github.com/ahmedkhalf/project.nvim)
-- 🎨 Easy theme switching
-- 🧱 Smooth window navigation and splits
+* ⚡ **Quick & Lazy** – Fast startup using smart lazy-loading for every plugin.
+* 📂 **Modern File Explorer** – Browse your system easily with [Oil.nvim](https://github.com/stevearc/oil.nvim).
+* 🔍 **Instant Search** – Fuzzy file search and live grep with [Telescope](https://github.com/nvim-telescope/telescope.nvim).
+* 🧠 **LSP Ready** – Autocompletion, go-to-definition, hover docs, and code actions built-in.
+* 🧩 **Smart Project Detection** – Auto-detect project root using `.git`, `Makefile`, and more with [project.nvim](https://github.com/ahmedkhalf/project.nvim).
+* 🎨 **Theme Switching** – Change themes on the fly with `:Theme <name>`.
+* 🧱 **Smooth Window Navigation** – Easy splits, window movement, and buffer handling for max productivity.
 
 ---
 
@@ -123,8 +124,7 @@ Try `tokyonight`, `catppuccin`, `gruvbox`, or any LazyVim-compatible theme.
 ## 🧠 Want to Customize?
 
 * Add plugins in `lua/plugins/`
-* Modify keybindings in `lua/init/keymaps.lua`
-* Change Neovim options in `lua/init/options.lua`
+* Change Neovim options in `lua/vim-options.lua`
 
 ---
 
@@ -132,7 +132,7 @@ Try `tokyonight`, `catppuccin`, `gruvbox`, or any LazyVim-compatible theme.
 
 * [ ] Run `:TSUpdate` to update treesitter
 * [ ] Open `:Mason` to install LSPs, linters, formatters
-* [ ] Customize `options.lua` and `keymaps.lua` as needed
+* [ ] Customize `vim-options.lua`
 
 ---
 
